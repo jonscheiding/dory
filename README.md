@@ -106,6 +106,7 @@ dory:
   # doesn't exist.
   dnsmasq:
     enabled: true
+    autostart: false       # true to set the container to restart unless stopped (e.g. after reboot)
     domains:               # array of domains that will be resolved to the specified address
       - domain: docker     # you can set '#' for a wildcard
         address: 127.0.0.1 # return for queries against the domain
@@ -120,6 +121,7 @@ dory:
     service_start_delay: 5  # seconds to wait after restarting systemd services
   nginx_proxy:
     enabled: true
+    autostart: false   # true to set the container to restart unless stopped (e.g. after reboot)
     container_name: dory_dinghy_http_proxy
     https_enabled: true
     ssl_certs_dir: ''  # leave as empty string to use default certs
@@ -132,7 +134,8 @@ dory:
     port: 53  # port where the nameserver listens. On linux it must be 53
   
   aliases:
-    enabled: true
+    enabled: true 
+    autostart: false  # true to make the aliases persist across restarts
     # addresses:
     #   To allow containers to talk to each other by their names,
     #   set dnsmasq.domains[].address to a private IP and add it here
