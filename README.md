@@ -130,6 +130,14 @@ dory:
     enabled: true
     nameserver: 127.0.0.1
     port: 53  # port where the nameserver listens. On linux it must be 53
+  
+  aliases:
+    enabled: true
+    # addresses:
+    #   To allow containers to talk to each other by their names,
+    #   set dnsmasq.domains[].address to a private IP and add it here
+    #   (Supported on MacOS only)
+    #   - <ip>
 ```
 
 #### Upgrading existing config file
