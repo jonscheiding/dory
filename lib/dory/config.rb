@@ -38,9 +38,10 @@ module Dory
           # doesn't exist.
           dnsmasq:
             enabled: true
-            domains:               # array of domains that will be resolved to the specified address
-              - domain: docker     # you can set '#' for a wildcard
-                address: 127.0.0.1 # return for queries against the domain
+            autostart: true
+            domains:                  # array of domains that will be resolved to the specified address
+              - domain: docker        # you can set '#' for a wildcard
+                address: 172.16.42.42 # return for queries against the domain
             container_name: dory_dnsmasq
             port: 53  # port to listen for dns requests on.  must be 53 on linux. can be anything that's open on macos
             # kill_others: kill processes bound to the port we need (see previous setting 'port')
@@ -52,17 +53,22 @@ module Dory
             service_start_delay: 5  # seconds to wait after restarting systemd services
           nginx_proxy:
             enabled: true
+            autostart: true
             container_name: dory_dinghy_http_proxy
             https_enabled: true
             ssl_certs_dir: ''  # leave as empty string to use default certs
             port: 80           # port 80 is default for http
             tls_port: 443      # port 443 is default for https
+            image: taybenlor/dory-http-proxy:latest
           resolv:
             enabled: true
             nameserver: 127.0.0.1
             port: 53  # port where the nameserver listens. On linux it must be 53
           aliases:
-            enabled: false
+            enabled: true
+            autostart: true
+            addresses:
+              - 172.16.42.42
       ).split("\n").map{|s| s.sub(' ' * 8, '')}.join("\n")
     end
 
